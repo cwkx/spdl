@@ -1,0 +1,70 @@
+/* Disable text selection in the body */
+body {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently */
+  cursor: default;
+}
+
+/* Constrain image group height */
+.image-list-group {
+    max-height:300px;
+    overflow-y:auto;
+}
+
+/* Longer tooltips */
+.tooltip-inner {
+  white-space:nowrap;
+  max-width:none;
+}
+
+/* Image Canvas*/
+#labelImage {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.axis path {
+  display: none;
+  pointer-events: none;
+}
+
+.axis line {
+  stroke-opacity: 0.3;
+  shape-rendering: crispEdges;
+  pointer-events: none;
+  stroke-dasharray: 2;
+  opacity: 0.5;
+}
+
+.axis text {
+   opacity: 0.4;
+   pointer-events: none;
+}
+
+.zoom {
+  fill: #f7f7f7;
+  pointer-events: all;
+}
+
+.selection {
+  fill: #afa2dc;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-opacity: 0.7;
+  vector-effect: non-scaling-stroke;
+
+}
+
+.brush .extent {
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.overline {
+    overflow: auto;
+    line-height: 36px;
+}
