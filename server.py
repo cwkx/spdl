@@ -1,13 +1,8 @@
-from flask import Flask, render_template, request, jsonify
-
-# Initialize the Flask application
+from flask import Flask, jsonify, render_template, request
 app = Flask(__name__)
 
-# This route will show a form to perform an AJAX request
-# jQuery is loaded to execute the request and update the
-# value of the operation
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
 # Route that will process the AJAX request, sum up two

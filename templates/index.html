@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>SPDL Signal Processing & Deep Learning Framework</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>SPDL signal processing & deep learning</title>
 	<meta name="description" content="Signal Processing & Deep Learning Framework.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon32.ico') }}">
 
 	<!-- Dependencies -->
 	<script src="../static/js/deps/jquery.min.js"></script>
@@ -19,36 +20,21 @@
 	<script src="../static/js/deps/d3-zoom.min.js"></script>
 	<script src="../static/js/deps/d3-brush.min.js"></script>
 
-	<!-- Javascript
-		<script src="../static/js/analysis.js"></script>
-		<script src="../static/js/viewer.js"></script>
-      <script src="../static/js/uploader.js"></script>
-		<script src="../static/js/editor.js"></script>
-		<script src="../static/js/filtering.js"></script>
-      -->
-
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="../static/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../static/css/codemirror.css">
 	<link rel="stylesheet" href="../static/css/spdlstyle.css">
 
-	<script type=text/javascript>
-		$(function() {
-			$('a#calculate').bind('click', function() {
-				$.getJSON('/_add_numbers', {
-					a: $('input[name="a"]').val(),
-					b: $('input[name="b"]').val()
-				}, function(data) {
-					$("#result").text(data.result);
-				});
-				return false;
-			});
-		});
-	</script>
+	<!-- Javascript -->
+   <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}; </script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/projects.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/tensors.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/model.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/deploy.js') }}"></script>
 </head>
 
 <body>
-
+	<!-- Title Heading -->
 	<div class="container">
 		<div class="container col-xs-12 col-sm-12">
 			<div class="row">
@@ -67,61 +53,74 @@
 		</div>
 	</div>
 
+	<!-- Navigation Bar -->
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<a class="navbar-brand">
 						<i class="glyphicon glyphicon-list"></i>
 					</a>
 				</div>
-
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li class="active">
-							<a href="#">Projects
-								<span class="sr-only">(current)</span>
-							</a>
+							<a data-toggle="tab" href="#projects">Projects</a>
 						</li>
 						<li>
-							<a href="#">Tensors</a>
+							<a data-toggle="tab" href="#tensors">Tensors</a>
 						</li>
 						<li>
-							<a href="#">Model</a>
+							<a data-toggle="tab" href="#model">Model</a>
 						</li>
 						<li>
-							<a href="#">Deploy</a>
+							<a data-toggle="tab" href="#deploy">Deploy</a>
 						</li>
 					</ul>
-
 				</div>
-				<!-- /.navbar-collapse -->
 			</div>
-			<!-- /.container-fluid -->
 		</nav>
-	</div>
 
+		<!-- Content: everything in one file and manage with jQuery rather than use jinja2 templates as its small/easy/responsive -->
+		<div class="tab-content">
 
-
-	<!--
-	<div class="container">
-		<div class="header">
-			<h3 class="text-muted">How To Manage JSON Requests</h3>
-		</div>
-		<hr/>
-		<div>
-			<p>
-				<input type="text" size="5" name="a"> +
-				<input type="text" size="5" name="b"> =
-				<span id="result">?</span>
+			<!-- ============================================================== -->
+			<!-- PROJECTS -->
+			<!-- ============================================================== -->
+			<div id="projects" class="tab-pane fade in active">
+				<p>Projects Content</p>
 				<p>
-					<a href="javascript:void();" id="calculate">calculate THE server side</a>
-					</form>
-		</div>
-	</div>
-	-->
-</body>
+					<input type=text size=5 name=a> +
+					<input type=text size=5 name=b> =
+					<span id=result>?</span>
+					<p>
+						<a href=# id=calculate>calculate server side</a>
+			</div>
 
+			<!-- ============================================================== -->
+			<!-- TENSORS -->
+			<!-- ============================================================== -->
+			<div id="tensors" class="tab-pane fade">
+				Tensors Content
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- MODEL -->
+			<!-- ============================================================== -->
+			<div id="model" class="tab-pane fade">
+				Model Content
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- DEPLOY -->
+			<!-- ============================================================== -->
+			<div id="deploy" class="tab-pane fade">
+				Deploy Content
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- END -->
+			<!-- ============================================================== -->
+		</div>
+</body>
 </html>
