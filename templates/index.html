@@ -87,14 +87,43 @@
 			<!-- ============================================================== -->
 			<!-- PROJECTS -->
 			<!-- ============================================================== -->
-			<div id="projects" class="tab-pane fade in active">
-				<p>Projects Content</p>
-				<p>
-					<input type=text size=5 name=a> +
-					<input type=text size=5 name=b> =
-					<span id=result>?</span>
-					<p>
-						<a href=# id=calculate>calculate server side</a>
+         <div id="projects" class="tab-pane fade in active">
+            <div class="panel-group" id="projectsAccordion">
+            	<div class="panel panel-primary">
+            		<div class="panel-heading">
+            			<h4 class="panel-title">
+            				<a data-toggle="collapse" data-parent="#projectsAccordion" href="#collapse1">Project List</a>
+            			</h4>
+            		</div>
+            		<div id="collapse1" class="panel-collapse collapse in">
+            			<div class="panel-body">
+                        <div class="container col-xs-6 col-sm-6">
+                           <div class="projects-list-group" id="projectsListGroup">
+                              <a class="list-group-item active" href="#">Empty</a>
+                           </div>
+                        </div>
+                        <div class="container col-xs-6 col-sm-6">
+                        	<div class="panel panel-default">
+                        		<div class="panel-heading">Information</div>
+                        		<div class="panel-body">
+                                 You currently have no projects.
+                        		</div>
+                        	</div>
+                        </div>
+                     </div>
+            		</div>
+            	</div>
+            	<div class="panel panel-default">
+            		<div class="panel-heading">
+            			<h4 class="panel-title">
+            				<a data-toggle="collapse" data-parent="#projectsAccordion" href="#collapse2">Make New Project</a>
+            			</h4>
+            		</div>
+            		<div id="collapse2" class="panel-collapse collapse">
+            			<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+            		</div>
+            	</div>
+            </div>
 			</div>
 
 			<!-- ============================================================== -->
@@ -108,7 +137,13 @@
 			<!-- MODEL -->
 			<!-- ============================================================== -->
 			<div id="model" class="tab-pane fade">
-				Model Content
+            <p>Model Content</p>
+				<p>
+					<input type=text size=5 name=a> +
+					<input type=text size=5 name=b> =
+					<span id=result>?</span>
+					<p>
+						<a href=# id=calculate>calculate server side</a>
 			</div>
 
 			<!-- ============================================================== -->
