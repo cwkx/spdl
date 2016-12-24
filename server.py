@@ -11,11 +11,19 @@ def home():
 #===============================================================================
 @app.route('/_create_project')
 def create_project():
-    name = request.args.get('name', 0, type=str)
-    description = request.args.get('description', 0, type=str)
-    exists = os.path.isdir("projects/name")
-    if not exists:
+    name = "projects/"+request.args.get('name', 0, type=str)
+    if name == "projects/":
+        return jsonify(success=False, message="<strong>Error: </strong>Project name is empty!")
+    try:
+        os.makedirs(name)
+    except OSError:
+        if not os.path.isdir(name):
+            return jsonify(success=False, message="<strong>Error: </strong>Could not create a project folder with that name!")
         return jsonify(success=False, message="<strong>Error: </strong>Project with that name already exists!")
+
+    # todo, parse description and put it into lmdb
+    description = request.args.get('description', 0, type=str)
+
     return jsonify(success=True)
 
 #===============================================================================
