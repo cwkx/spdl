@@ -9,8 +9,8 @@ def home():
 #===============================================================================
 # PROJECTS
 #===============================================================================
-@app.route('/_create_project')
-def create_project():
+@app.route('/create-project')
+def createProject():
     name = "projects/"+request.args.get('name', 0, type=str)
     if name == "projects/":
         return jsonify(success=False, message="<strong>Error: </strong>Project name is empty!")
@@ -26,11 +26,15 @@ def create_project():
 
     return jsonify(success=True)
 
+@app.route('/list-projects')
+def listProjects():
+    return jsonify(next(os.walk('projects'))[1])
+
 #===============================================================================
 # MODEL
 #===============================================================================
-@app.route('/_add_numbers')
-def add_numbers():
+@app.route('/add-numbers')
+def addNumbers():
     a = request.args.get('a', 0, type=int)
     b = request.args.get('b', 0, type=int)
     return jsonify(result=a + b)
