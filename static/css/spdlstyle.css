@@ -9,8 +9,12 @@ body {
   cursor: default;
 }
 
+label {
+    font-weight: normal !important;
+}
+
 /* Constrain image group height */
-.projects-list-group {
+.project-list-group {
     max-height:300px;
     overflow-y:auto;
 }

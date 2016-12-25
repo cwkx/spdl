@@ -3,22 +3,46 @@ $(document).ready(function() {
 	// we initially refresh the projects list
 	refreshProjects();
 
-	// refresh the projects list
+	// refresh the project list
 	function refreshProjects() {
 		$.get($SCRIPT_ROOT + '/list-projects', function(data) {
-			var activeIndex = $('.projects-list-group a.active').index();
-			$('#projectsListGroup').empty();
+			var activeIndex = $('.project-list-group a.active').index();
+			$('#projectListGroup').empty();
+			$("#projectList").prop('disabled', false);
 			data.forEach(function(name) {
-				$('#projectsListGroup').append('<a href="#" class="list-group-item">' + name + '</a>');
+				$('#projectListGroup').append('<a href="#" class="list-group-item">' + name + '</a>');
 			});
-			$('.projects-list-group a').eq(activeIndex).addClass('active').click();
+			if (data.length == 0) {
+				$("#projectList").prop('disabled', true);
+				$("#newProject").click();
+			}
+			$('.project-list-group a').eq(activeIndex).addClass('active').click();
 		});
 	}
 
+	// on click for project list item
+	$('body').on('click', '.project-list-group a', function(e) {
+		e.preventDefault();
+		$(this).addClass('active');
+		$(this).siblings().removeClass('active');
+
+		var name = e.currentTarget.text;
+		$.getJSON($SCRIPT_ROOT + '/project-meta', {
+			name: name
+		}, function(data) {
+			console.log(data);
+			$("#listProjectName").val(data.name);
+			$("#listProjectDescription").val(data.description);
+			$("#listProjectSize").text(data.size);
+		});
+	});
+
 	$('#projectList').on('click', function(e) {
-		$("#newProjectCollapse").parent().removeClass("panel-primary");
-		$("#newProjectCollapse").parent().addClass("panel-default");
-		$("#projectListCollapse").parent().addClass("panel-primary");
+		if (!$("#projectList").prop('disabled')) {
+			$("#newProjectCollapse").parent().removeClass("panel-primary");
+			$("#newProjectCollapse").parent().addClass("panel-default");
+			$("#projectListCollapse").parent().addClass("panel-primary");
+		}
 	});
 
 	$('#newProject').on('click', function(e) {
@@ -36,6 +60,8 @@ $(document).ready(function() {
 			if (data.success) {
 				refreshProjects();
 				$("#projectList").click();
+				$("#newProjectName").val("");
+				$("#newProjectDescription").val("");
 			}
 			else {
 				$("#newProjectAlert").removeClass('alert-danger');
