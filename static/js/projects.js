@@ -8,13 +8,13 @@ $(document).ready(function() {
 		$.get($SCRIPT_ROOT + '/list-projects', function(data) {
 			var activeIndex = $('.project-list-group a.active').index();
 			$('#projectListGroup').empty();
-			$("#projectList").prop('disabled', false);
+			//$("#projectList").prop('disabled', false);
 			data.forEach(function(name) {
 				$('#projectListGroup').append('<a href="#" class="list-group-item">' + name + '</a>');
 			});
 			if (data.length == 0) {
-				$("#projectList").prop('disabled', true);
-				$("#newProject").click();
+				//$("#projectList").prop('disabled', true);
+				//$("#newProject").click();
 			}
 			$('.project-list-group a').eq(activeIndex).addClass('active').click();
 		});
@@ -58,6 +58,7 @@ $(document).ready(function() {
 			description: $('#newProjectDescription').val()
 		}, function(data) {
 			if (data.success) {
+
 				refreshProjects();
 				$("#projectList").click();
 				$("#newProjectName").val("");
