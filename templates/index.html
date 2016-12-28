@@ -56,25 +56,17 @@
 	<!-- Navigation Bar -->
 	<div class="container">
 		<nav class="navbar navbar-default">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand">
-						<i class="glyphicon glyphicon-list"></i>
-					</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li class="active">
-						<a data-toggle="tab" href="#projects">Projects</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#tensors">Tensors</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#model">Model</a>
-					</li>
-					<li>
-						<a data-toggle="tab" href="#deploy">Deploy</a>
-					</li>
+			<div class="navbar-header">
+				<a class="navbar-brand">
+					<i class="glyphicon glyphicon-list"></i>
+				</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li class="active"><a data-toggle="tab" href="#projects">Projects</a></li>
+					<li><a data-toggle="tab" href="#tensors">Tensors</a></li>
+					<li><a data-toggle="tab" href="#model">Model</a></li>
+					<li><a data-toggle="tab" href="#deploy">Deploy</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -126,15 +118,31 @@
 												 </div>
 											    <div class="form-group">
 											        <div class="col-sm-offset-2 col-sm-10">
-											            <button type="submit" class="btn btn-default" id="listProjectUpdate" data-toggle="collapse" data-target="listProjectAlert">Update Details</button>
-															<button type="submit" class="btn pull-right btn-danger" id="listProjectUpdate" data-toggle="collapse" data-target="listProjectAlert">Delete Project</button>
+											            <button type="button" class="btn btn-default" id="listProjectUpdate"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Update Details</button>
+															<a data-toggle="modal" href="#listProjectDeleteModal" id="listProjectDelete" class="btn pull-right btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Project</a>
 											        </div>
 											    </div>
-												 <div class="alert alert-danger collapse" id="listProjectAlert">
-													  <strong>Warning!</strong> Really delete project? You will loose all your data. This can not be undone.
-													  <button type="submit" class="btn btn-danger" id="listProjectDeleteConfirm">Confirm Delete</button>
-												 </div>
 											</form>
+											<div class="modal fade" id="listProjectDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content panel-danger">
+														<div class="modal-header panel-heading">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title"><strong>Warning!</strong> Confirm deletion.</h4>
+														</div>
+														<div class="modal-body">
+															<p>
+																Really delete project? You will loose all of your data. This action can not be undone.
+															</p>
+															<input type="text" class="form-control" id="listProjectDeleteInput" placeholder="Type in the name of the currently selected project to confirm.">
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+															<button type="button" class="btn btn-danger" id="listProjectDeleteConfirm" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Project</button>
+														</div>
+													</div>
+												</div>
+											</div>
                         		</div>
                         	</div>
                         </div>
@@ -166,12 +174,9 @@
 									 </div>
 								    <div class="form-group">
 								        <div class="col-sm-offset-2 col-sm-10">
-								            <button type="submit" class="btn btn-primary" id=newProjectCreate data-toggle="collapse" data-target="#newProjectAlert">Create Project</button>
+								            <button type="submit" class="btn btn-primary" id=newProjectCreate data-toggle="collapse" data-target="#newProjectAlert"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Create Project</button>
 								        </div>
 								    </div>
-									 <div class="alert alert-success collapse" id="newProjectAlert">
-										  <strong>Success!</strong> Indicates a successful or positive action.
-									 </div>
 								</form>
 							</div>
             		</div>
@@ -204,6 +209,13 @@
 			<!-- ============================================================== -->
 			<div id="deploy" class="tab-pane fade">
 				Deploy Content
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- ABOUT -->
+			<!-- ============================================================== -->
+			<div id="about" class="tab-pane fade">
+				About Content
 			</div>
 
 			<!-- ============================================================== -->

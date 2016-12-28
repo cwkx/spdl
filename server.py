@@ -18,13 +18,13 @@ def createProject():
     # create project if folder doesn't exist, else return error message
     directory = 'projects/'+name
     if directory == 'projects/':
-        return jsonify(success=False, message='<strong>Error: </strong>Project name is empty!')
+        return jsonify(success=False, message='Project name is empty!')
     try:
         os.makedirs(directory)
     except OSError:
         if not os.path.isdir(directory):
-            return jsonify(success=False, message='<strong>Error: </strong>Could not create a project folder with that name!')
-        return jsonify(success=False, message='<strong>Error: </strong>Project with that name already exists!')
+            return jsonify(success=False, message='Could not create a project folder with that name!')
+        return jsonify(success=False, message='Project with that name already exists!')
 
     # create the database
     env = lmdb.open(directory+'/database', max_dbs=10)

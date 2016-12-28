@@ -8,67 +8,53 @@ body {
   user-select: none;           /* Non-prefixed version, currently */
   cursor: default;
 }
+label { font-weight: normal !important; }
 
-label {
-    font-weight: normal !important;
-}
+.constrained-image { max-width: 100%; max-height: 100%; }                                     /* Image Canvas*/
+.project-list-group { max-height:300px; overflow-y:auto; }                              /* Constrain image group height */
+.tooltip-inner { white-space:nowrap; max-width:none; }                                  /* Longer tooltips */
 
-/* Constrain image group height */
-.project-list-group {
-    max-height:300px;
-    overflow-y:auto;
-}
+/* d3 CSS */
+.axis path { display: none; pointer-events: none; }
+.axis line { stroke-opacity: 0.3; shape-rendering: crispEdges; pointer-events: none; stroke-dasharray: 2; opacity: 0.5; }
+.axis text { opacity: 0.4; pointer-events: none; }
+.zoom { fill: #f7f7f7; pointer-events: all; }
+.selection { fill: #afa2dc; stroke: #fff; stroke-width: 2; stroke-opacity: 0.7; vector-effect: non-scaling-stroke; }
+.brush .extent { fill-opacity: .125; shape-rendering: crispEdges; }
+.overline { overflow: auto; line-height: 36px; }
 
-/* Longer tooltips */
-.tooltip-inner {
-  white-space:nowrap;
-  max-width:none;
-}
-
-/* Image Canvas*/
-#labelImage {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.axis path {
-  display: none;
-  pointer-events: none;
-}
-
-.axis line {
-  stroke-opacity: 0.3;
-  shape-rendering: crispEdges;
-  pointer-events: none;
-  stroke-dasharray: 2;
-  opacity: 0.5;
-}
-
-.axis text {
-   opacity: 0.4;
-   pointer-events: none;
-}
-
-.zoom {
-  fill: #f7f7f7;
-  pointer-events: all;
-}
-
-.selection {
-  fill: #afa2dc;
-  stroke: #fff;
-  stroke-width: 2;
-  stroke-opacity: 0.7;
-  vector-effect: non-scaling-stroke;
-
-}
-
-.brush .extent {
-  fill-opacity: .125;
-  shape-rendering: crispEdges;
-}
-
-.overline {
-    overflow: auto;
-    line-height: 36px;
-}
+/* popover addons */
+.popover { padding: 0; }
+.popover-lg { min-width: 480px; }
+.popover-md { min-width: 350px; }
+.popover.top-right > .arrow, .popover.bottom-right > .arrow { left: 90%; }
+.popover.top-left > .arrow, .popover.bottom-left > .arrow { left: 10%; }
+.popover.left-top > .arrow, .popover.right-top > .arrow { top: 10%; }
+.popover.left-bottom > .arrow, .popover.right-bottom > .arrow { top: 90%; }
+.popover-default.bottom > .arrow:after { border-bottom-color: #f7f7f7; }
+.popover-primary.bottom > .arrow:after { border-bottom-color: #428bca; }
+.popover-success.bottom > .arrow:after { border-bottom-color: #dff0d8; }
+.popover-danger.bottom > .arrow:after { border-bottom-color: #f2dede; }
+.popover-warning.bottom > .arrow:after { border-bottom-color: #fcf8e3; }
+.popover-info.bottom > .arrow:after { border-bottom-color: #d9edf7; }
+.popover-default.left-top > .arrow:after { border-left-color: #f7f7f7; }
+.popover-default.right-top > .arrow:after { border-right-color: #f7f7f7; }
+.popover-primary.left-top > .arrow:after { border-left-color: #428bca; }
+.popover-primary.right-top > .arrow:after { border-right-color: #428bca; }
+.popover-success.left-top > .arrow:after { border-left-color: #dff0d8; }
+.popover-success.right-top > .arrow:after { border-right-color: #dff0d8; }
+.popover-danger.left-top > .arrow:after { border-left-color: #f2dede; }
+.popover-danger.right-top > .arrow:after { border-right-color: #f2dede; }
+.popover-warning.left-top > .arrow:after { border-left-color: #fcf8e3; }
+.popover-warning.right-top > .arrow:after { border-right-color: #fcf8e3; }
+.popover-info.left-top > .arrow:after { border-left-color: #d9edf7; }
+.popover-info.right-top > .arrow:after { border-right-color: #d9edf7; }
+.popover-default > .popover-title { color: #333; background-color: #f7f7f7; }
+.popover-primary > .popover-title { color: #fff; background-color: #428bca; border: 2px solid #428bca; }
+.popover-success > .popover-title { color: #3c763d; background-color: #dff0d8; border-bottom: 1px solid #d6e9c6; }
+.popover-info > .popover-title { color: #31708f; background-color: #d9edf7; border-bottom: 1px solid #bce8f1; }
+.popover-warning > .popover-title { color: #8a6d3b; background-color: #fcf8e3; border-bottom: 1px solid #faebcc; }
+.popover-danger > .popover-title { color: #a94442; background-color: #f2dede; border-bottom: 1px solid #ebccd1; }
+.popover.has-footer.top > .arrow:after, .has-footer.popover.top > .arrow:after { border-top-color: #fbfbfb; }
+.popover.has-footer.left-bottom > .arrow:after { border-top-color: transparent; border-left-color: #fbfbfb; }
+.popover.has-footer.right-bottom > .arrow:after { border-top-color: transparent; border-right-color: #fbfbfb; }
