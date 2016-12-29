@@ -1,4 +1,4 @@
-import os, lmdb
+import os, lmdb, re, shutil
 from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
@@ -15,19 +15,23 @@ def createProject():
     name = request.args.get('name', 0, type=str)
     description = request.args.get('description', 0, type=str)
 
+    # check name is valid
+    if not re.match("^[a-z0-9-]*$", name):
+        return jsonify(success=False, message='Project name should only contain lowercase letters, numbers or hyphens!')
+
     # create project if folder doesn't exist, else return error message
-    directory = 'projects/'+name
-    if directory == 'projects/':
+    path = 'projects/'+name
+    if path == 'projects/':
         return jsonify(success=False, message='Project name is empty!')
     try:
-        os.makedirs(directory)
+        os.makedirs(path)
     except OSError:
-        if not os.path.isdir(directory):
+        if not os.path.isdir(path):
             return jsonify(success=False, message='Could not create a project folder with that name!')
         return jsonify(success=False, message='Project with that name already exists!')
 
     # create the database
-    env = lmdb.open(directory+'/database', max_dbs=10)
+    env = lmdb.open(path+'/database', max_dbs=10)
     meta = env.open_db(b'meta')
     inputs = env.open_db(b'inputs')
     outputs = env.open_db(b'outputs')
@@ -40,6 +44,13 @@ def createProject():
     env.close()
 
     return jsonify(success=True)
+
+@app.route('/delete-project')
+def deleteProject():
+    name = request.args.get('name', 0, type=str)
+    path = 'projects/'+name
+    shutil.rmtree(path, ignore_errors=True, onerror=None)
+    return jsonify(True)
 
 @app.route('/list-projects')
 def listProjects():
@@ -64,6 +75,18 @@ def projectMeta():
         json = jsonify(name=txn.get(b'name').decode(), description=txn.get(b'description').decode(), size=size)
     env.close()
     return json
+
+@app.route('/update-project')
+def updateProject():
+    name = request.args.get('name', 0, type=str)
+    path = 'projects/'+name+'/database'
+    env = lmdb.open(path, max_dbs=10, readonly=True)
+    meta = env.open_db(b'meta')
+    with env.begin(db=meta,write=True) as txn:
+        txn.put(b'name', name.encode(), db=meta)
+        txn.put(b'description', description.encode(), db=meta)
+    env.close()
+    return jsonify(True)
 
 #===============================================================================
 # MODEL

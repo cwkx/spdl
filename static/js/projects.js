@@ -11,14 +11,11 @@ $(document).ready(function() {
 		$.get($SCRIPT_ROOT + '/list-projects', function(data) {
 			var activeIndex = $('.project-list-group a.active').index();
 			$('#projectListGroup').empty();
-			//$("#projectList").prop('disabled', false);
 			data.forEach(function(name) {
 				$('#projectListGroup').append('<a href="#" class="list-group-item">' + name + '</a>');
 			});
-			if (data.length == 0) {
-				//$("#projectList").prop('disabled', true);
-				//$("#newProject").click();
-			}
+			var maxChildren = $('.project-list-group a').length;
+			activeIndex = Math.min(activeIndex, maxChildren - 1);
 			$('.project-list-group a').eq(activeIndex).addClass('active').click();
 		});
 	}
@@ -33,7 +30,6 @@ $(document).ready(function() {
 		$.getJSON($SCRIPT_ROOT + '/project-meta', {
 			name: name
 		}, function(data) {
-			console.log(data);
 			$("#listProjectName").val(data.name);
 			$("#listProjectDescription").val(data.description);
 			$("#listProjectSize").text(data.size);
@@ -49,9 +45,8 @@ $(document).ready(function() {
 		trigger: 'focus'
 	});
 
-	$('#listProjectDeleteInput').bind('input', function(){
-		console.log($(this).val());
-		if ($(this).val() == $('#listProjectName').val())
+	$('#listProjectDeleteInput').bind('input', function() {
+		if ($(this).val() == $('#listProjectName').val() && $(this).val() != '')
 		{
 			$('#listProjectDeleteConfirm').removeClass('btn-disabled');
 			$('#listProjectDeleteConfirm').addClass('btn-danger');
@@ -63,10 +58,19 @@ $(document).ready(function() {
    });
 
 	$('#listProjectDeleteConfirm').on('click', function() {
-		if ($('#listProjectDeleteInput').val() == $('#listProjectName').val())
+		var name = $('#listProjectDeleteInput').val();
+		if (name == $('#listProjectName').val() && name != '')
 		{
-			console.log("Delete confirm clicked!");
-			$('#listProjectDeleteModal').modal('toggle');
+			$.getJSON($SCRIPT_ROOT + '/delete-project', {
+				name: name
+			}, function(data) {
+				// we wipe the meta values incase you delete the last project, otherwise it would show old information
+				$("#listProjectName").val('');
+				$("#listProjectDescription").val('');
+				$("#listProjectSize").text('');
+				refreshProjects();
+				$('#listProjectDeleteModal').modal('toggle');
+			});
 		}
 	});
 
@@ -112,7 +116,6 @@ $(document).ready(function() {
 				$("#newProjectDescription").val("");
 			}
 			else {
-
 				var popover = $('#newProjectName').data('bs.popover');
 				    popover.options.content = data.message;
 					 popover.show();
