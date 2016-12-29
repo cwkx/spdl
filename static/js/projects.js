@@ -17,6 +17,10 @@ $(document).ready(function() {
 			var maxChildren = $('.project-list-group a').length;
 			activeIndex = Math.min(activeIndex, maxChildren - 1);
 			$('.project-list-group a').eq(activeIndex).addClass('active').click();
+			if (maxChildren == 0)
+			{
+				$('#projectListGroup').html('<h4>You have no projects!</h4><br>Please click "<strong>Make New Project</strong>" below.');
+			}
 		});
 	}
 
@@ -36,6 +40,7 @@ $(document).ready(function() {
 		});
 	});
 
+	// update the project details, can cause popovers at different parts
 	$('#listProjectUpdate').on('click', function() {
 		var active = $('.project-list-group a').eq($('.project-list-group a.active').index());
 		$.getJSON($SCRIPT_ROOT + '/update-project', {
@@ -62,8 +67,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
-
 
 	$('#listProjectDeleteInput').bind('input', function() {
 		if ($(this).val() == $('#listProjectName').val() && $(this).val() != '')
@@ -114,6 +117,7 @@ $(document).ready(function() {
 		$("#newProjectCollapse").parent().addClass("panel-primary");
 	});
 
+	// various popovers
 	$('#listProjectUpdate').popover({
 		title: "Success",
 		html: true,
