@@ -79,14 +79,33 @@ def projectMeta():
 @app.route('/update-project')
 def updateProject():
     name = request.args.get('name', 0, type=str)
-    path = 'projects/'+name+'/database'
-    env = lmdb.open(path, max_dbs=10, readonly=True)
+    newName = request.args.get('newName', 0, type=str)
+    description = request.args.get('description', 0, type=str)
+
+    # check name is valid
+    if not re.match("^[a-z0-9-]*$", newName):
+        return jsonify(success=False, message='Project name should only contain lowercase letters, numbers or hyphens!')
+
+    # now rename the folders
+    if newName == '':
+        return jsonify(success=False, message='Project name is empty!')
+    try:
+        os.rename('projects/'+name, 'projects/'+newName)
+    except OSError:
+        if not os.path.isdir('projects/'+newName):
+            return jsonify(success=False, message='Could not create a project folder with that name!')
+        return jsonify(success=False, message='Project with that name already exists!')
+
+    # now write the entry
+    path = 'projects/'+newName+'/database'
+    env = lmdb.open(path, max_dbs=10)
     meta = env.open_db(b'meta')
     with env.begin(db=meta,write=True) as txn:
-        txn.put(b'name', name.encode(), db=meta)
-        txn.put(b'description', description.encode(), db=meta)
+        txn.replace(b'name', newName.encode(), db=meta)
+        txn.replace(b'description', description.encode(), db=meta)
     env.close()
-    return jsonify(True)
+
+    return jsonify(success=True)
 
 #===============================================================================
 # MODEL

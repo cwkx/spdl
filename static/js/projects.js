@@ -36,14 +36,34 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#listProjectUpdate').popover({
-		title: "Success",
-		content: "Details saved!",
-		html: true,
-		template: '<div class="popover popover-success"><div class="arrow"></div><div class="popover-inner popover-success"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
-		placement: 'bottom',
-		trigger: 'focus'
+	$('#listProjectUpdate').on('click', function() {
+		var active = $('.project-list-group a').eq($('.project-list-group a.active').index());
+		$.getJSON($SCRIPT_ROOT + '/update-project', {
+			name: active.text(),
+			newName: $('#listProjectName').val(),
+			description: $('#listProjectDescription').val()
+		}, function(data) {
+			if (data.success) {
+				refreshProjects();
+				var popover = $('#listProjectUpdate').data('bs.popover');
+					 popover.options.content = 'Details saved!';
+					 popover.show();
+				setTimeout(function(){
+					popover.hide();
+				}, 2000);
+			}
+			else {
+				var popover = $('#listProjectName').data('bs.popover');
+					 popover.options.content = data.message;
+					 popover.show();
+				setTimeout(function(){
+					popover.hide();
+				}, 2000);
+			}
+		});
 	});
+
+
 
 	$('#listProjectDeleteInput').bind('input', function() {
 		if ($(this).val() == $('#listProjectName').val() && $(this).val() != '')
@@ -94,6 +114,22 @@ $(document).ready(function() {
 		$("#newProjectCollapse").parent().addClass("panel-primary");
 	});
 
+	$('#listProjectUpdate').popover({
+		title: "Success",
+		html: true,
+		template: '<div class="popover popover-success"><div class="arrow"></div><div class="popover-inner popover-success"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
+		placement: 'bottom',
+		trigger: 'manual'
+	});
+
+	$('#listProjectName').popover({
+		title: "Error",
+		html: true,
+		template: '<div class="popover popover-danger"><div class="arrow"></div><div class="popover-inner popover-danger"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
+		placement: 'top',
+		trigger: 'manual'
+	});
+
 	$('#newProjectName').popover({
 		title: "Error",
 		html: true,
@@ -109,7 +145,6 @@ $(document).ready(function() {
 			description: $('#newProjectDescription').val()
 		}, function(data) {
 			if (data.success) {
-
 				refreshProjects();
 				$("#projectList").click();
 				$("#newProjectName").val("");
@@ -122,7 +157,6 @@ $(document).ready(function() {
 				setTimeout(function(){
 					popover.hide();
 				}, 2000);
-
 			}
 		});
 		return false;
