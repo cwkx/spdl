@@ -28,8 +28,7 @@
 	<!-- Javascript -->
    <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}; </script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/projects.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/tensors.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/model.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/deploy.js') }}"></script>
 </head>
 
@@ -64,8 +63,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-left">
 					<li class="active"><a data-toggle="tab" href="#projects">Projects</a></li>
-					<li><a data-toggle="tab" href="#tensors">Tensors</a></li>
-					<li><a data-toggle="tab" href="#model">Model</a></li>
+					<li><a data-toggle="tab" href="#editor">Editor</a></li>
 					<li><a data-toggle="tab" href="#deploy">Deploy</a></li>
 				</ul>
 			</div>
@@ -185,20 +183,26 @@
 			</div>
 
 			<!-- ============================================================== -->
-			<!-- TENSORS -->
+			<!-- EDITOR -->
 			<!-- ============================================================== -->
-			<div id="tensors" class="tab-pane fade">
+			<div id="editor" class="tab-pane fade">
 				<div class="row">
 					<div class="col-xs-12 col-md-8">
 						<div class="panel-group">
-							<div class="panel panel-default">
+							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a data-toggle="collapse" href="#collapse1">Code Editor</a>
 									</h4>
 								</div>
-								<div id="collapse1" class="panel-collapse collapse">
-									<div class="panel-body">Panel Body</div>
+								<div id="collapse1" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<ul class="nav nav-tabs">
+										   <li class="active"><a href="#">Inputs</a></li>
+										   <li><a href="#">Model</a></li>
+										   <li><a href="#">Outputs</a></li>
+										</ul>
+									</div>
 									<div class="panel-footer">Panel Footer</div>
 								</div>
 							</div>
@@ -208,7 +212,7 @@
 										<a data-toggle="collapse" href="#collapse2">Interpreter</a>
 									</h4>
 								</div>
-								<div id="collapse2" class="panel-collapse collapse">
+								<div id="collapse2" class="panel-collapse collapse in">
 									<div class="panel-body">Panel Body</div>
 								</div>
 							</div>
@@ -218,7 +222,7 @@
 										<a data-toggle="collapse" href="#collapse3">Outputs</a>
 									</h4>
 								</div>
-								<div id="collapse3" class="panel-collapse collapse">
+								<div id="collapse3" class="panel-collapse collapse in">
 									<div class="panel-body">Panel Body</div>
 								</div>
 							</div>
@@ -232,8 +236,27 @@
 										<a data-toggle="collapse" href="#workspaceInputs">Inputs</a>
 									</h4>
 								</div>
-								<div id="workspaceInputs" class="panel-collapse collapse">
-									<div class="panel-body">Panel Body</div>
+								<div id="workspaceInputs" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<ul class="list-group">
+											<li class="list-group-item">
+												<span class="label label-spaced label-primary pull-right">Data</span>
+												<span class="label label-spaced label-default pull-right">1023x?x?</span>
+												Images
+											</li>
+											<li class="list-group-item">
+												<span class="label label-spaced label-primary pull-right">Code</span>
+												Images-Resized
+												<span class="label label-spaced label-default pull-right">1023x224x224</span>
+											</li>
+											<li class="list-group-item">
+												<span class="label label-spaced label-primary pull-right">User</span>
+												Bools
+												<span class="label label-spaced label-default pull-right">1023x1</span>
+											</li>
+										</ul>
+
+									</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -242,7 +265,7 @@
 										<a data-toggle="collapse" href="#workspaceModel">Model</a>
 									</h4>
 								</div>
-								<div id="workspaceModel" class="panel-collapse collapse">
+								<div id="workspaceModel" class="panel-collapse collapse in">
 									<div class="panel-body">Panel Body</div>
 								</div>
 							</div>
@@ -252,26 +275,13 @@
 										<a data-toggle="collapse" href="#workspaceOutputs">Outputs</a>
 									</h4>
 								</div>
-								<div id="workspaceOutputs" class="panel-collapse collapse">
+								<div id="workspaceOutputs" class="panel-collapse collapse in">
 									<div class="panel-body">Panel Body</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<!-- ============================================================== -->
-			<!-- MODEL -->
-			<!-- ============================================================== -->
-			<div id="model" class="tab-pane fade">
-            <p>Model Content</p>
-				<p>
-					<input type=text size=5 name=a> +
-					<input type=text size=5 name=b> =
-					<span id=result>?</span>
-					<p>
-						<a href=# id=calculate>calculate server side</a>
 			</div>
 
 			<!-- ============================================================== -->
