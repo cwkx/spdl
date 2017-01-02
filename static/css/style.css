@@ -10,15 +10,14 @@ body {
 }
 label { font-weight: normal !important; }
 
-#testEditor {
-   min-height: 300px;
-   font-size: 14px;
-}
+#testEditor { min-height: 300px; font-size: 14px; }
+#workspacePanel { min-height: 100%; }
+#tab-list .close { margin-left: 7px; }
 
-.label-spaced { min-width: 40px; margin-left: 5px; }
-.constrained-image { max-width: 100%; max-height: 100%; }                               /* Image Canvas*/
-.project-list-group { max-height:300px; overflow-y:auto; }                              /* Constrain image group height */
-.tooltip-inner { white-space:nowrap; max-width:none; }                                  /* Longer tooltips */
+.label-spaced { min-width: 50px; margin-left: 5px; }
+.constrained-image { max-width: 100%; max-height: 100%; }    /* Image Canvas*/
+.project-list-group { max-height:300px; overflow-y:auto; }   /* Constrain image group height */
+.tooltip-inner { white-space:nowrap; max-width:none; }       /* Longer tooltips */
 
 /* d3 CSS */
 .axis path { display: none; pointer-events: none; }

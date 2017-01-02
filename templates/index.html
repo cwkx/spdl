@@ -17,18 +17,18 @@
 	<script src="../static/js/deps/d3.min.js"></script>
 	<script src="../static/js/deps/d3-zoom.min.js"></script>
 	<script src="../static/js/deps/d3-brush.min.js"></script>
+	<script src="../static/js/deps/sortable.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='js/deps/ace.js') }}"></script>
 
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="../static/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../static/css/spdlstyle.css">
+	<link rel="stylesheet" href="../static/css/style.css">
 
 	<!-- Javascript -->
    <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}; </script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/projects.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/deploy.js') }}"></script>
-
 </head>
 
 <body>
@@ -196,96 +196,95 @@
 								</div>
 								<div id="collapse1" class="panel-collapse collapse in">
 									<div class="panel-body">
-										<ul class="nav nav-tabs">
-										   <li class="active"><a data-toggle="tab" href="#editorInputsTab">Inputs</a></li>
-										   <li><a data-toggle="tab" href="#editorModelTab">Model</a></li>
-										   <li><a data-toggle="tab" href="#editorOutputsTab">Outputs</a></li>
+										<ul class="nav nav-tabs" id="tab-list" role="tablist">
+										   <li class="active"><a data-toggle="tab" href="#editorInputsTab">inputs.py</a></li>
+										   <li><a data-toggle="tab" href="#editorModelTab">model.py</a></li>
+										   <li><a data-toggle="tab" href="#editorOutputsTab">outputs.py</a></li>
+											<div class="btn-group pull-right">
+											<button id="editorModify" type="button" data-toggle="modal" href="#editorModifyModal" class="btn btn-default"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button>
+											<button id="editorHelp" type="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button>
+											</div>
 										</ul>
 										<div class="tab-content">
-											<div class="tab-pane fade in active" id="editorInputsTab" role="tabpanel"><div id="testEditor">function foo(items) {
-    var x = "All this is syntax highlighted";
-    return x;</div></div>
+											<div class="tab-pane fade in active" id="editorInputsTab" role="tabpanel"><div id="testEditor"></div></div>
 											<div class="tab-pane fade" id="editorModelTab" role="tabpanel"><textarea class="form-control" rows="5" id="editorModel"></textarea></div>
 											<div class="tab-pane fade" id="editorOutputsTab" role="tabpanel"><textarea class="form-control" rows="5" id="editorOutputs"></textarea></div>
+										</div>
+										<div class="modal fade" id="editorModifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content panel-primary">
+													<div class="modal-header panel-heading">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title"><strong>Create, Rename, or Delete</strong> current file.</h4>
+													</div>
+													<div class="modal-body">
+														<p>
+															Rename, create or delete files. To delete, type in "confirm".
+														</p>
+														<input type="text" class="form-control" id="listProjectDeleteInput" placeholder='Type a new name, rename selected, or type "confirm" for deletion.'>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> New File</button>
+														<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Rename</button>
+														<button type="button" class="btn btn-danger pull-left" id="editorModifyDelete" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
+														<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="panel-footer">Panel Footer</div>
 								</div>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" href="#collapse2">Interpreter</a>
-									</h4>
-								</div>
-								<div id="collapse2" class="panel-collapse collapse in">
-									<div class="panel-body">Panel Body</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" href="#collapse3">Outputs</a>
-									</h4>
-								</div>
-								<div id="collapse3" class="panel-collapse collapse in">
-									<div class="panel-body">Panel Body</div>
-								</div>
-							</div>
 						</div>
 					</div>
 					<div class="col-xs-6 col-md-4">
-						<div class="panel-group">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" href="#workspaceInputs">Inputs</a>
-									</h4>
-								</div>
-								<div id="workspaceInputs" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<ul class="list-group">
-											<li class="list-group-item">
-												<span class="label label-spaced label-primary pull-right">Data</span>
-												<span class="label label-spaced label-default pull-right">1023x?x?</span>
-												Images
-											</li>
-											<li class="list-group-item">
-												<span class="label label-spaced label-primary pull-right">Code</span>
-												Images-Resized
-												<span class="label label-spaced label-default pull-right">1023x224x224</span>
-											</li>
-											<li class="list-group-item">
-												<span class="label label-spaced label-primary pull-right">User</span>
-												Bools
-												<span class="label label-spaced label-default pull-right">1023x1</span>
-											</li>
-										</ul>
-
-									</div>
-								</div>
+						<div class="panel panel-default" id="workspacePanel">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" href="#workspace">Workspace</a>
+								</h4>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" href="#workspaceModel">Model</a>
-									</h4>
-								</div>
-								<div id="workspaceModel" class="panel-collapse collapse in">
-									<div class="panel-body">Panel Body</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" href="#workspaceOutputs">Outputs</a>
-									</h4>
-								</div>
-								<div id="workspaceOutputs" class="panel-collapse collapse in">
-									<div class="panel-body">Panel Body</div>
-								</div>
+							<div class="panel-body">
+								<ul class="list-group">
+									<li class="list-group-item">
+										<span class="label label-spaced label-primary pull-right">Image</span>
+										<span class="label label-spaced label-default pull-right">1023x?x?</span>
+										Images
+									</li>
+									<li class="list-group-item">
+										<span class="label label-spaced label-primary pull-right">Code</span>
+										Images-Resized
+										<span class="label label-spaced label-default pull-right">1023x224x224</span>
+									</li>
+									<li class="list-group-item">
+										<span class="label label-spaced label-primary pull-right">User</span>
+										Bools
+										<span class="label label-spaced label-default pull-right">1023x1</span>
+									</li>
+								</ul>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#collapse2">Interpreter</a>
+						</h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse in">
+						<div class="panel-body">Panel Body</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#collapse3">Outputs</a>
+						</h4>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse in">
+						<div class="panel-body">Panel Body</div>
 					</div>
 				</div>
 			</div>
