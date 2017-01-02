@@ -10,6 +10,11 @@ body {
 }
 label { font-weight: normal !important; }
 
+#testEditor {
+   min-height: 300px;
+   font-size: 14px;
+}
+
 .label-spaced { min-width: 40px; margin-left: 5px; }
 .constrained-image { max-width: 100%; max-height: 100%; }                               /* Image Canvas*/
 .project-list-group { max-height:300px; overflow-y:auto; }                              /* Constrain image group height */

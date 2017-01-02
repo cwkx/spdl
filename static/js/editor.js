@@ -1,6 +1,7 @@
-var cmInputs, cmModel, cmOutputs;
-
 $(document).ready(function() {
-   console.log("model hi");
+
+   var editor = ace.edit("testEditor");
+   editor.setTheme("ace/theme/chrome");
+   editor.getSession().setMode("ace/mode/python");
 
 });
