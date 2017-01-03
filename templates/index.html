@@ -6,7 +6,7 @@
 	<title>SPDL signal processing & deep learning</title>
 	<meta name="description" content="Signal Processing & Deep Learning Framework.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon32.ico') }}">
+	<!--<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon32.ico') }}">-->
 
 	<!-- Dependencies -->
 	<script src="../static/js/deps/jquery.min.js"></script>
@@ -26,8 +26,8 @@
 
 	<!-- Javascript -->
    <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}; </script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/projects.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/projects.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/deploy.js') }}"></script>
 </head>
 

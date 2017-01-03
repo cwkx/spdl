@@ -37,6 +37,7 @@ $(document).ready(function() {
 			$("#listProjectName").val(data.name);
 			$("#listProjectDescription").val(data.description);
 			$("#listProjectSize").text(data.size);
+			editorReloadFiles(data.name);
 		});
 	});
 

@@ -110,6 +110,20 @@ def updateProject():
 #===============================================================================
 # MODEL
 #===============================================================================
+@app.route('/list-files')
+def listFiles():
+    name = request.args.get('name', 0, type=str)
+    path = 'projects/'+name
+    files = []
+    contents = []
+    for file in os.listdir(path):
+        if file.endswith(".py"):
+            with open(path+'/'+file, 'r') as myfile:
+                contents.append(myfile.read())
+                files.append(file)
+    print(contents)
+    return jsonify(files=files,contents=contents)
+
 @app.route('/add-numbers')
 def addNumbers():
     a = request.args.get('a', 0, type=int)
