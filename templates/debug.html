@@ -1,59 +1,305 @@
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="Sortable.min.js"></script>
-	<style type="text/css">
-	#tab-list .close{
-		margin-left: 7px;
-	}
-	</style>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var tabID = 1;
-            $('#btn-add-tab').click(function () {
-                tabID++;
-                $('#tab-list').append($('<li><a href="#tab' + tabID + '" role="tab" data-toggle="tab">Tab ' + tabID + '<button class="close" type="button" title="Remove this page">×</button></a></li>'));
-                $('#tab-content').append($('<div class="tab-pane fade" id="tab' + tabID + '">Tab '+ tabID +' content</div>'));
-            });
-            $('#tab-list').on('click','.close',function(){
-                var tabID = $(this).parents('a').attr('href');
-                $(this).parents('li').remove();
-                $(tabID).remove();
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>SPDL signal processing & deep learning</title>
+	<meta name="description" content="Signal Processing & Deep Learning Framework.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon32.ico') }}">-->
 
-                //display first tab
-                var tabFirst = $('#tab-list a:first');
-                tabFirst.tab('show');
-            });
+	<!-- Dependencies -->
+	<script src="../static/js/deps/jquery-2.2.4.min.js"></script>
+	<script src="../static/js/deps/jquery-ui.min.js"></script>
+	<script src="../static/js/deps/bootstrap.min.js"></script>
+	<script src="../static/js/deps/bootstrap-filestyle.min.js"></script>
+	<script src="../static/js/deps/dropzone.js"></script>
+	<script src="../static/js/deps/simple-ajax.min.js"></script>
+	<script src="../static/js/deps/d3.min.js"></script>
+	<script src="../static/js/deps/d3-zoom.min.js"></script>
+	<script src="../static/js/deps/d3-brush.min.js"></script>
+	<script src="../static/js/deps/sortable.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='js/deps/ace.js') }}"></script>
 
-			var list = document.getElementById("tab-list");
-			new Sortable(list);
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../static/css/jquery-ui.css">
+	<link rel="stylesheet" href="../static/css/style.css">
 
-        });
-    </script>
+	<!-- Javascript -->
+   <script type=text/javascript> $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}; </script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/editor.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/projects.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/deploy.js') }}"></script>
 </head>
-<body>
-<div class="container">
-    <h1>Bootstrap Tab Add & Reposition Demo</h1>
-    <p>Please try drag drop to reposition tab. You can see article here: <a href="http://tutsave.com/jquery/bootstrap-tabs-add-remove-reposition.html">Bootstrap Tabs: Add, Remove, Reposition</a></p>
-    <div class="row">
-        <div class="col-md-12">
-            <p>
-                <button id="btn-add-tab" type="button" class="btn btn-primary pull-right">Add Tab</button>
-            </p>
-            <!-- Nav tabs -->
-            <ul id="tab-list" class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#tab1" role="tab" data-toggle="tab">Tab 1</a></li>
-            </ul>
 
-            <!-- Tab panes -->
-            <div id="tab-content" class="tab-content">
-                <div class="tab-pane fade in active" id="tab1">Tab 1 content</div>
+<body>
+	<!-- Title Heading -->
+	<div class="container">
+		<div class="container col-xs-12 col-sm-12">
+			<div class="row">
+				<div class="span4">
+					<div class="content-heading">
+						<h1 class="text-left">
+							<span class="text-primary">
+								<b>SPDL</b>
+							</span>
+							<span class="text-muted"> signal processing & deep learning</span>
+						</h1>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Navigation Bar -->
+	<div class="container">
+		<nav class="navbar navbar-default">
+			<div class="navbar-header">
+				<a class="navbar-brand">
+					<i class="glyphicon glyphicon-list"></i>
+				</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li class="active"><a data-toggle="tab" href="#projects">Projects</a></li>
+					<li><a data-toggle="tab" href="#editor">Editor</a></li>
+					<li><a data-toggle="tab" href="#deploy">Deploy</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- Content: everything in one file and manage with jQuery rather than use jinja2 templates as its small/easy/responsive -->
+		<div class="tab-content">
+
+			<!-- ============================================================== -->
+			<!-- PROJECTS -->
+			<!-- ============================================================== -->
+         <div id="projects" class="tab-pane fade in active">
+            <div class="panel-group" id="projectsAccordion">
+
+					<!-- Projects List -->
+					<div class="panel panel-primary">
+            		<div class="panel-heading">
+            			<h4 class="panel-title">
+            				<a id="projectList" data-toggle="collapse" data-parent="#projectsAccordion" href="#projectListCollapse">Project List</a>
+            			</h4>
+            		</div>
+            		<div id="projectListCollapse" class="panel-collapse collapse in">
+            			<div class="panel-body">
+                        <div class="container col-xs-4 col-sm-4">
+                           <div class="project-list-group" id="projectListGroup">
+                           </div>
+                        </div>
+                        <div class="container col-xs-8 col-sm-8">
+                        	<div class="panel panel-default">
+                        		<div class="panel-heading">Information</div>
+                        		<div class="panel-body">
+											<form class="form-horizontal">
+											    <div class="form-group">
+											        <label class="control-label col-sm-2" for="listProjectName">Name</label>
+											        <div class="col-sm-10">
+											            <input class="form-control" id="listProjectName">
+											        </div>
+											    </div>
+												 <div class="form-group">
+												     <label class="control-label col-sm-2" for="listProjectDescription">Description</label>
+												     <div class="col-sm-10">
+												         <textarea class="form-control" id="listProjectDescription" rows="3"></textarea>
+												     </div>
+												 </div>
+												 <div class="form-group">
+													  <label class="control-label col-sm-2" for="listProjectDescription">Size</label>
+													  <div class="col-sm-10">
+															<label class="form-control" id="listProjectSize"></textarea>
+													  </div>
+												 </div>
+											    <div class="form-group">
+											        <div class="col-sm-offset-2 col-sm-10">
+											            <button type="button" class="btn btn-default" id="listProjectUpdate"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> Update Details</button>
+															<a data-toggle="modal" href="#listProjectDeleteModal" id="listProjectDelete" class="btn pull-right btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Project</a>
+											        </div>
+											    </div>
+											</form>
+											<div class="modal fade" id="listProjectDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content panel-danger">
+														<div class="modal-header panel-heading">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title"><strong>Warning!</strong> Confirm project delete.</h4>
+														</div>
+														<div class="modal-body">
+															<p>
+																Really delete project? You will loose all of your data. This action can not be undone.
+															</p>
+															<input type="text" class="form-control" id="listProjectDeleteInput" placeholder="Type in the name of the currently selected project to confirm.">
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+															<button type="button" class="btn btn-danger" id="listProjectDeleteConfirm" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete Project</button>
+														</div>
+													</div>
+												</div>
+											</div>
+                        		</div>
+                        	</div>
+                        </div>
+                     </div>
+            		</div>
+            	</div>
+
+					<!-- Make New Project -->
+            	<div class="panel panel-default">
+            		<div class="panel-heading">
+            			<h4 class="panel-title">
+            				<a id="newProject" data-toggle="collapse" data-parent="#projectsAccordion" href="#newProjectCollapse">Make New Project</a>
+            			</h4>
+            		</div>
+            		<div id="newProjectCollapse" class="panel-collapse collapse">
+            			<div class="panel-body">
+								<form class="form-horizontal">
+								    <div class="form-group">
+								        <label class="control-label col-sm-2" for="newProjectName">Project Name</label>
+								        <div class="col-sm-10">
+								            <input class="form-control" id="newProjectName" placeholder="Enter a lowercase project folder name without spaces: e.g. 'vessel-segmentation'.">
+								        </div>
+								    </div>
+									 <div class="form-group">
+									     <label class="control-label col-sm-2" for="newProjectDescription">Description</label>
+									     <div class="col-sm-10">
+									         <textarea class="form-control" id="newProjectDescription" rows="3" placeholder="Description of project (optional)."></textarea>
+									     </div>
+									 </div>
+								    <div class="form-group">
+								        <div class="col-sm-offset-2 col-sm-10">
+								            <button type="submit" class="btn btn-primary" id=newProjectCreate data-toggle="collapse" data-target="#newProjectAlert"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Create Project</button>
+								        </div>
+								    </div>
+								</form>
+							</div>
+            		</div>
+            	</div>
             </div>
-        </div>
-    </div>
-</div>
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- EDITOR -->
+			<!-- ============================================================== -->
+			<div id="editor" class="tab-pane fade">
+				<div class="panel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#collapse1">Code Editor</a>
+							</h4>
+						</div>
+						<div id="collapse1" class="panel-collapse collapse in">
+							<div class="container col-md-8">
+								<div class="panel-body">
+									<ul class="nav nav-tabs" id="editorTabs" role="tablist">
+									   <li class="active"><a data-toggle="tab" href="#editorInputsTab">inputs.py</a></li>
+									   <li><a data-toggle="tab" href="#editorModelTab">model.py</a></li>
+									   <li><a data-toggle="tab" href="#editorOutputsTab">outputs.py</a></li>
+										<div class="btn-group pull-right">
+										<button id="editorModify" type="button" data-toggle="modal" href="#editorModifyModal" class="btn btn-default"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button>
+										<button id="editorHelp" type="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button>
+										</div>
+									</ul>
+									<div class="tab-content" id="editorContent">
+									</div>
+									<div class="modal fade" id="editorModifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content panel-primary">
+												<div class="modal-header panel-heading">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+													<h4 class="modal-title"><strong>Create, Rename, or Delete</strong> current file.</h4>
+												</div>
+												<div class="modal-body">
+													<p>
+														Rename, create or delete files. To delete, type in "confirm".
+													</p>
+													<input type="text" class="form-control" id="listProjectDeleteInput" placeholder='Type a new name, rename selected, or type "confirm" for deletion.'>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> New File</button>
+													<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Rename</button>
+													<button type="button" class="btn btn-danger pull-left" id="editorModifyDelete" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button>
+													<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default" id="workspacePanel">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" href="#workspace">Workspace</a>
+							</h4>
+						</div>
+						<div class="panel-body">
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="label label-spaced label-primary pull-right">Image</span>
+									<span class="label label-spaced label-default pull-right">1023x?x?</span>
+									Images
+								</li>
+								<li class="list-group-item">
+									<span class="label label-spaced label-primary pull-right">Code</span>
+									Images-Resized
+									<span class="label label-spaced label-default pull-right">1023x224x224</span>
+								</li>
+								<li class="list-group-item">
+									<span class="label label-spaced label-primary pull-right">User</span>
+									Bools
+									<span class="label label-spaced label-default pull-right">1023x1</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#collapse2">Interpreter</a>
+						</h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse in">
+						<div class="panel-body">Panel Body</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" href="#collapse3">Outputs</a>
+						</h4>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse in">
+						<div class="panel-body">Panel Body</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- DEPLOY -->
+			<!-- ============================================================== -->
+			<div id="deploy" class="tab-pane fade">
+				Deploy Content
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- ABOUT -->
+			<!-- ============================================================== -->
+			<div id="about" class="tab-pane fade">
+				About Content
+			</div>
+
+			<!-- ============================================================== -->
+			<!-- END -->
+			<!-- ============================================================== -->
+		</div>
 </body>
 </html>

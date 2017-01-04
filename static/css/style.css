@@ -10,9 +10,8 @@ body {
 }
 label { font-weight: normal !important; }
 
-.ace-editor { min-height: 300px; font-size: 14px; }
-#workspacePanel { min-height: 100%; }
-#tab-list .close { margin-left: 7px; }
+#editorPanel{position: relative; min-width:100%; max-width:100%; min-height:200px; }
+.ace-editor { position: absolute; top:95px;left:0;right:0;bottom:0; }
 
 .label-spaced { min-width: 50px; margin-left: 5px; }
 .constrained-image { max-width: 100%; max-height: 100%; }    /* Image Canvas*/

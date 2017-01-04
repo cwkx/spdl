@@ -1,3 +1,5 @@
+var editors = [];
+
 $(document).ready(function() {
 
    // sortable tabs
@@ -20,6 +22,15 @@ $(document).ready(function() {
    var list = document.getElementById("editorTabs");
    new Sortable(list);
 
+   $( "#editorPanel" ).resizable({
+      resize: function( event, ui ) {
+         $.each(editors, function(i, e) {
+            e.resize();
+            console.log("resize "+i);
+         });
+
+      }
+   });
 });
 
 // reloads file list, called from projects.js when a project is loaded
@@ -30,6 +41,7 @@ function editorReloadFiles(projectName)
    }, function(data) {
       $('#editorTabs').empty();
       $('#editorContent').empty();
+      editors.length = 0;
       $.each(data.files, function(i, filename) {
          var active = i==0 ? 'active' : '';
          $('#editorTabs').append($('<li class="'+active+'"><a role="tab" data-toggle="tab" href="#editorTab'+i+'">'+filename+'</a></li>'));
@@ -38,6 +50,9 @@ function editorReloadFiles(projectName)
          var editor = ace.edit("editorAce"+i);
          editor.setTheme("ace/theme/chrome");
          editor.getSession().setMode("ace/mode/python");
+         editors.push(editor);
+
+         // http://jsbin.com/ojijeb/645/edit?html,css,output
       });
    });
 }
