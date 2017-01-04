@@ -10,9 +10,10 @@ body {
 }
 label { font-weight: normal !important; }
 
-#editorPanel{position: relative; min-width:100%; max-width:100%; min-height:200px; }
-.ace-editor { position: absolute; top:95px;left:0;right:0;bottom:0; }
+#editorPanel{position: relative; min-width:20%; max-width:100%; min-height:200px; vertical-align:top; display:inline-block; }
+#workspacePanel {max-width:400px;  }
 
+.ace-editor { position: absolute; top:95px;left:0;right:0;bottom:0; }
 .label-spaced { min-width: 50px; margin-left: 5px; }
 .constrained-image { max-width: 100%; max-height: 100%; }    /* Image Canvas*/
 .project-list-group { max-height:300px; overflow-y:auto; }   /* Constrain image group height */

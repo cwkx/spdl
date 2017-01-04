@@ -26,9 +26,7 @@ $(document).ready(function() {
       resize: function( event, ui ) {
          $.each(editors, function(i, e) {
             e.resize();
-            console.log("resize "+i);
          });
-
       }
    });
 });
@@ -54,5 +52,9 @@ function editorReloadFiles(projectName)
 
          // http://jsbin.com/ojijeb/645/edit?html,css,output
       });
+      $('#editorTabs').append('<div class="btn-group pull-right">\
+      <button id="editorModify" type="button" data-toggle="modal" href="#editorModifyModal" class="btn btn-default"><span class="glyphicon glyphicon-wrench"\ aria-hidden="true"></span></button>\
+      <button id="editorHelp" type="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></button>\
+      </div>')
    });
 }
